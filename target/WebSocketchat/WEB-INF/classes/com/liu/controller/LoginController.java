@@ -67,7 +67,7 @@ public class LoginController {
 			return "redirect:/login.jsp";
 		}
 	}
-//	ÍË³öÍõ
+//	ÍË³ö
 	@RequestMapping("/logout")
 	public String logout(HttpSession session,RedirectAttributes redirectAttributes)
 	{
