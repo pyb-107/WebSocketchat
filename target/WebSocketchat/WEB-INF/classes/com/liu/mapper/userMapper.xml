@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.liu.pojo.User">
+    <id column="USERID" property="userid" jdbcType="VARCHAR"/>
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR"/>
+    <result column="NICKNAME" property="nickname" jdbcType="VARCHAR"/>
+    <result column="SEX" property="sex" jdbcType="INTEGER"/>
+    <result column="AGE" property="age" jdbcType="INTEGER"/>
+    <result column="PROFILEHEAD" property="profilehead" jdbcType="VARCHAR"/>
+    <result column="PROFILE" property="profile" jdbcType="VARCHAR"/>
+    <result column="FIRSTTIME" property="firsttime" jdbcType="VARCHAR"/>
+    <result column="LASTTIME" property="lasttime" jdbcType="VARCHAR"/>
+    <result column="STATUS" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="GameRecord" type="com.liu.pojo.GameRecord">
+        <result column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="WINNER" property="winner" jdbcType="VARCHAR"/>
+        <result column="LOSER" property="loser" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="FriendRelation" type="com.liu.pojo.FriendRelation">
+        <result column="P1" property="Person1" jdbcType="VARCHAR"/>
+        <result column="P2" property="Person2" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        USERID,PASSWORD,NICKNAME,SEX,AGE,PROFILEHEAD,PROFILE,FIRSTTIME,LASTTIME,STATUS
+    </sql>
+      <!-- 查询所有用户 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM user
+        ORDER BY FIRSTTIME
+        LIMIT #{offset},#{limit}
+    </select>
+      <!-- 根据用户id查询用户 -->
+    <select id="selectUserByUserId" parameterType="String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM user
+        WHERE USERID=#{userid}
+    </select>
+<!--     查询用户数量 -->
+    <select id="selectCount" resultType="Integer">
+        SELECT COUNT(*)USERCOUNT
+        FROM user
+    </select>
+<!--    查询比赛记录-->
+    <select id="getRecord" parameterType="String" resultMap="GameRecord">
+        SELECT *
+        FROM fightrecord
+        WHERE WINNER=#{userid} OR LOSER=#{userid}
+    </select>
+    <select id="selectFriendRelationList" parameterType="String" resultMap="FriendRelation">
+        SELECT *
+        FROM friendrelation
+        WHERE P1=#{userid} OR P2=#{userid}
+    </select>
+    <!--     插入用户 -->
+ 	<insert id="insertUser" parameterType="com.liu.pojo.User">
+ 	    INSERT INTO user (USERID, PASSWORD, NICKNAME, SEX, AGE, PROFILEHEAD, PROFILE, FIRSTTIME, LASTTIME, STATUS)
+  	    VALUES (#{userid, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{nickname, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER},
+    	#{age, jdbcType=INTEGER}, #{profilehead, jdbcType=VARCHAR}, #{profile, jdbcType=VARCHAR},
+    	#{firsttime, jdbcType=VARCHAR}, #{lasttime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER})
+ 	</insert>
+    <insert id="insertGameRecord" parameterType="com.liu.pojo.GameRecord">
+        INSERT INTO fightrecord(ID, WINNER, LOSER)
+        VALUES (#{id, jdbcType=BIGINT}, #{winner, jdbcType=VARCHAR}, #{loser, jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertFriend" parameterType="com.liu.pojo.FriendRelation">
+        INSERT INTO friendrelation(P1, P2)
+        values (#{Person1, jdbcType=VARCHAR}, #{Person2, jdbcType=VARCHAR})
+    </insert>
+    <update id="updateUser" parameterType="com.liu.pojo.User">
+ 	    UPDATE user
+ 	    <set>
+ 	  <if test="password != null and password != ''">
+        PASSWORD = #{password, jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null and nickname != ''">
+        NICKNAME = #{nickname, jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null and sex != ''">
+        SEX = #{sex, jdbcType=INTEGER},
+      </if>
+      <if test="age != null and age != ''">
+        AGE = #{age, jdbcType=INTEGER},
+      </if>
+      <if test="profilehead != null and profilehead != ''">
+        PROFILEHEAD = #{profilehead, jdbcType=VARCHAR},
+      </if>
+      <if test="profile != null and profile != ''">
+        PROFILE = #{profile, jdbcType=VARCHAR},
+      </if>
+      <if test="firsttime != null and firsttime != ''">
+        FIRSTTIME = #{firsttime, jdbcType=VARCHAR},
+      </if>
+      <if test="lasttime != null and lasttime != ''">
+        LASTTIME = #{lasttime, jdbcType=VARCHAR},
+      </if>
+      <if test="status != null and status != ''">
+        STATUS = #{status, jdbcType=INTEGER},
+      </if>
+ 	    </set>
+ 	    WHERE USERID=#{userid}
+ 	</update>
+ 	<delete id="deleteUser" parameterType="String">
+ 	    DELETE FROM user
+ 	    WHERE USERID=#{userid}
+ 	</delete>
+    <delete id="deleteFriend" parameterType="String">
+        DELETE FROM friendrelation
+ 	    WHERE P1=#{friendname} OR P2=#{friendname}
+    </delete>
+</mapper>
