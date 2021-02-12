@@ -25,6 +25,7 @@ import com.liu.utils.WordDefined;
 @Controller
 @RequestMapping(value="/user")
 public class LoginController {
+	//zhushi
 	@Resource
 	private UserServiceImpl userServiceImpl;
 	@Resource
@@ -67,7 +68,7 @@ public class LoginController {
 			return "redirect:/login.jsp";
 		}
 	}
-//	ÍË³ö
+//	ÍË³öÍõ
 	@RequestMapping("/logout")
 	public String logout(HttpSession session,RedirectAttributes redirectAttributes)
 	{
