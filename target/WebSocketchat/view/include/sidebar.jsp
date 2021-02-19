@@ -5,7 +5,16 @@
 <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
     <div class="am-offcanvas-bar admin-offcanvas-bar">
         <ul class="am-list admin-sidebar-list">
-            <li><a href="${ctx}/index.jsp"><span class="am-icon-commenting"></span> 聊天</a></li>
+            <li><a href="${ctx}/index.jsp"><span class="am-icon-commenting"></span> 大厅聊天</a></li>
+
+            <li class="admin-parent">
+                <a class="am-cf" data-am-collapse="{target: '#collapse-nav2'}"><span class="am-icon-users"></span> 聊天室 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav2">
+                    <li><a href="${ctx}/createroom.jsp"><span class="am-icon-plus-square"></span> 创建聊天室</a></li>
+                    <li><a href="${ctx}/system-setting/${userid}"><span class="am-icon-group"></span> 加入聊天室</a></li>
+                </ul>
+            </li>
+
             <li><a href="${ctx}/information/${userid}" class="am-cf"><span class="am-icon-book"></span> 个人信息<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
             <li class="admin-parent">
                 <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-cogs"></span> 设置 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
@@ -25,6 +34,8 @@
             </li>
             <li><a href="${ctx}/help"><span class="am-icon-globe"></span> 帮助</a></li>
             <li><a href="${ctx}/about"><span class="am-icon-leaf"></span> 关于</a></li>
+            <li><a href="${ctx}/updatelog"><span class="am-icon-reorder"></span> 更新日志</a></li>
+
             <li><a href="${ctx}/user/logout"><span class="am-icon-sign-out"></span> 注销</a></li>
         </ul>
         <div class="am-panel am-panel-default admin-sidebar-panel">

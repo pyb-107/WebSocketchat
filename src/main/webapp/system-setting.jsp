@@ -70,7 +70,7 @@
  					<div class="am-tab-panel am-fade" id="tab2">
                     <form class="am-form am-form-horizontal" action="${ctx}/upload/${userid}" enctype="multipart/form-data" method="post" onsubmit="return checkFileType();" style="text-align: center;">
                         <div style="text-align: center;margin-bottom: 10px">
-                            <img class="am-circle" src="${ctx}/${user.profilehead}" width="140" height="140" alt="加载失败"/>
+                            <img class="am-circle" src="${pageContext.request.contextPath}/file/photo/${user.profilehead}" width="140" height="140" alt="加载失败"/>
                         </div>
                         <div class="am-form-group am-form-file">
                             <button type="button" class="am-btn am-btn-secondary am-btn-sm">

@@ -13,7 +13,7 @@
 <div class="am-cf admin-main">
 <%--    左部--%>
     <jsp:include page="view/include/sidebar.jsp"/>
-    <div class="admin-content">
+    <div class="admin-content" style="overflow: scroll">
         <div class="" style="width: 80%;float:left;">
             <!-- 聊天区 -->
             <div class="am-scrollable-vertical" id="chat-view" style="height: 510px;">

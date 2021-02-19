@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="${ctx}/static/plugins/amaze/css/admin.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/contextjs/css/context.standalone.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/layui/css/layui.css">
+<link rel="stylesheet" href="${ctx}/static/source/css/my.css">
+
 
 <script src="${ctx}/static/plugins/jquery/jquery-2.1.4.min.js"></script>
 <script src="${ctx}/static/plugins/amaze/js/amazeui.min.js"></script>
@@ -18,4 +20,5 @@
 <script>
     var path = '${ctx}';
     var userid = '${userid}'
+    var roomid = 0;
 </script>

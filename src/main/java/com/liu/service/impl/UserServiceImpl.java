@@ -78,6 +78,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Integer insertFriend(String p1, String p2) {
 		FriendRelation friendRelation = new FriendRelation();
+
+//		判断是否已经存在好友
+		ArrayList<String> friendlist = this.getfriendlist(p1);
+		for (String friendid :friendlist){
+			if (friendid.equals(p2)){
+				return 2;
+			}
+		}
 //		规定p1大于p2
 		if(p1.compareTo(p2)>0){
 			friendRelation.setPerson1(p1);

@@ -50,6 +50,13 @@ public class UserController {
 		modelAndView.setViewName("information");
 		return modelAndView;
 	}
+//展示更新日志
+	@RequestMapping("/updatelog")
+	public String updatelog()
+		{
+			return "updatelog";
+		}
+
 //	信息设置
 	@RequestMapping("infosetting/{userid}")
 	public ModelAndView infosetting(@PathVariable("userid")String userid,HttpServletRequest request){
@@ -90,13 +97,17 @@ public class UserController {
 		String real=request.getServletContext().getRealPath("/");
 		String imagename=file.getOriginalFilename();
 		System.out.println("imagename:"+imagename);
-		String imageurlnotag="/information/upload/"+userid+"/"+imagename;
-		File file1=new File(real+"\\information\\upload"+"\\"+userid);
+//		String imageurlnotag="/information/upload/"+userid+"/"+imagename;
+		String imageurlnotag=imagename;
+//		File file1=new File(real+"\\information\\upload"+"\\"+userid);
+		File file1=new File(real+"/file/photo");
 		if(!file1.exists())
 		{
+//			如果目录不存在就创建目录
 			file1.mkdirs();
 		}
-		File imageurl=new File(file1+"\\"+imagename);
+
+		File imageurl=new File(file1+"/"+imagename);
 		file.transferTo(imageurl);//将源图片复制到制定位置
 		User user=new User();
 		user.setUserid(userid);
@@ -179,7 +190,7 @@ public class UserController {
 	{
 		String realurl=request.getServletContext().getRealPath("/");
 		String imageurl=userServiceImpl.selectUserByUserId(userid).getProfilehead();
-		String url=realurl+imageurl;
+		String url=realurl+"file/photo/"+imageurl;
 		InputStream inputStream=new FileInputStream(url);
 		ServletOutputStream outputStream=response.getOutputStream();
 		response.setContentType("image/jpeg; charset=UTF-8");

@@ -66,6 +66,7 @@
 	            /user/*=anon
 	            /register=anon
 	            /static/**=anon
+				/chatroom/*=anon
 	           /**=authc
 	           /user/logout=logout
 	        </value>

@@ -29,7 +29,7 @@
                             ${user.nickname}
                         </div>
                         <div class="am-u-md-6" style="float: right">
-                            <img class="am-circle" src="${pageContext.request.contextPath}/${user.profilehead}" width="140" height="140" alt="${user.nickname}"/>
+                            <img class="am-circle" src="${pageContext.request.contextPath}/file/photo/${user.profilehead}" width="140" height="140" alt="${user.nickname}"/>
                         </div>
 
                         <div class="am-u-md-3"><b>性别:</b></div>
