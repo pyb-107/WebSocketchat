@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pan.dao.RoomDao">
+
+    <resultMap id="BaseResultMap" type="com.pan.pojo.Room">
+        <id column="ROOMID" property="roomid" jdbcType="VARCHAR"/>
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR"/>
+        <result column="CREATER" property="creater" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="RoomIdRelationMap" type="com.pan.pojo.UserRoomRelation">
+        <result column="USERID" property="userId" jdbcType="VARCHAR"/>
+        <result column="ROOMID" property="roomId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertRoom" parameterType="com.pan.pojo.Room">
+        INSERT INTO chatroom (ROOMID, PASSWORD, CREATER)
+        VALUES (#{roomid, jdbcType=VARCHAR},#{password, jdbcType=VARCHAR},#{creater, jdbcType=VARCHAR})
+    </insert>
+    <insert id="joinRoom" parameterType="com.pan.pojo.UserRoomRelation">
+        INSERT INTO user_room_log (USERID, ROOMID)
+        VALUES (#{userId, jdbcType=VARCHAR},#{roomId, jdbcType=VARCHAR})
+    </insert>
+    <delete id="exitRoom" parameterType="java.lang.String">
+        delete from user_room_log
+        where USERID = #{userid, jdbcType=VARCHAR}
+    </delete>
+    <select id="selectRoomById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from chatroom
+        WHERE ROOMID = #{roomid, jdbcType=VARCHAR}
+    </select>
+    <select id="selectAllRoomRelation" resultMap="RoomIdRelationMap">
+        select * from user_room_log
+    </select>
+
+
+</mapper>
