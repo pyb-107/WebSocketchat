@@ -23,7 +23,7 @@
         </div>
 
         <div class="align-center" style="width: 100%;height: 100%">
-        <form class="layui-form"  lay-filter="example" action="${pageContext.request.contextPath}/chatroom/jumptoroom" method="post">
+        <form class="layui-form"  lay-filter="example" action="${pageContext.request.contextPath}/chatroom/jumptoroom/${userid}" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">房间号</label>
                 <div class="layui-input-block">
@@ -67,14 +67,12 @@
     <jsp:include page="view/include/footer.jsp"/>
     <script>
         $(".mycheckbox").slideUp();
-
         layui.use('form', function(){
             var form = layui.form;
 
             //监听提交
             form.on('submit(createroom)', function(data){
                 var state = true;
-                debugger;
                 var room ={
                     "roomid":data.field.roomid,
                     "password":data.field.password,
@@ -89,7 +87,6 @@
                     contentType:'application/json',
                     success:function(res){
                         if(res==true){
-                            debugger;
                         }
                         else{
                             alert('房间号已存在');
@@ -101,7 +98,6 @@
                         state = false;
                     }
                 });
-                debugger
                 if (state == false){
                     return false;
                 }

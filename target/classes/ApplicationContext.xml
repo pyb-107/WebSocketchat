@@ -10,7 +10,7 @@
                         http://www.springframework.org/schema/tx
                         http://www.springframework.org/schema/tx/spring-tx.xsd">        
 <!--      加载所有的service，指定所在的包 -->
-	<context:component-scan base-package="com.liu.service"></context:component-scan>
+	<context:component-scan base-package="com.pan.service"></context:component-scan>
 <!-- 	加载数据库属性 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	    <property name="location" value="classpath:jdbc.properties"></property>
@@ -36,11 +36,11 @@
 	    <property name="dataSource" ref="dataSource"></property>
 <!-- 	    <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
 <!-- 		指定mybatis mapper文件 -->
-	    <property name="mapperLocations" value="classpath:com/liu/mapper/*.xml"></property>
+	    <property name="mapperLocations" value="classpath:com/pan/mapper/*.xml"></property>
 	</bean>
 <!-- 	配置自动扫描dao包 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-	    <property name="basePackage" value="com.liu.dao"></property>
+	    <property name="basePackage" value="com.pan.dao"></property>
 	    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 <!-- 	配置事物管理器 -->
@@ -49,7 +49,7 @@
 	</bean>
 <!-- 	配置shiro，用于登陆验证 -->
 <!-- 	注入自定义的realm -->
-	<bean id="myRealm" class="com.liu.Realm.myrealm"></bean>
+	<bean id="myRealm" class="com.pan.Realm.myrealm"></bean>
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="myRealm" />
 	</bean>

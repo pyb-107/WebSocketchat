@@ -3,7 +3,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>WebChat | 创建聊天室</title>
+    <title>WebChat | 加入聊天室</title>
     <jsp:include page="view/include/commonfile.jsp"/>
     <style>
         html, body{
@@ -31,12 +31,6 @@
                 </div>
             </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">是否设置密码</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="close" lay-skin="switch"  lay-filter="checkbox" lay-text="ON|OFF">
-                </div>
-            </div>
 
 
             <div class="mycheckbox" >
@@ -76,20 +70,29 @@
                 var room ={
                     "roomid":data.field.roomid,
                     "password":data.field.password,
-                    "creater":userid
                 }
                 $.ajax({
-                    url:'${pageContext.request.contextPath}/chatroom/insertroom',
+                    url:'${pageContext.request.contextPath}/chatroom/joinroom',
                     type:'post',
                     data:JSON.stringify(room),
                     async: false,
                     dataType:'JSON',
                     contentType:'application/json',
                     success:function(res){
-                        if(res==true){
+                        if(res==1){
                         }
-                        else{
-                            alert('房间号已存在');
+                        else if(res==2){
+                            alert('该房间设置了密码');
+                            $(".mycheckbox").slideDown();
+                            state = false;
+                        }else if(res==3){
+                            alert('密码错误')
+                            state = false;
+                        }else if(res==4){
+                            alert('房间号不存在')
+                            state = false;
+                        }else if(res==0){
+                            alert('系统错误')
                             state = false;
                         }
                     },
@@ -103,14 +106,7 @@
                 }
             });
 
-            form.on('switch(checkbox)', function(data){
-                console.log(data.elem.checked); //开关是否开启，true或者false
-                if(data.elem.checked){
-                    $(".mycheckbox").slideDown();
-                }else {
-                    $(".mycheckbox").slideUp();
-                }
-            });
+
         });
     </script>
 </body>

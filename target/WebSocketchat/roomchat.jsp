@@ -69,7 +69,8 @@
     <span class="am-icon-btn am-icon-th-list"></span></a>
     <jsp:include page="view/include/footer.jsp"/>
     <script>
-        debugger;
+        roomid = ${roomid};
+        console.log("roomid="+roomid);
         layui.use(['layer','table'], function(){
             var layer = layui.layer;
             var table = layui.table;
@@ -118,7 +119,7 @@
     
         var wsServer = null;
         var ws = null;
-        wsServer = "ws://" + location.host+"${pageContext.request.contextPath}" + "/chatServer";	//WebServer的路径
+        wsServer = "ws://" + location.host+"${pageContext.request.contextPath}" + "/RoomChatServer";	//WebServer的路径
         ws = new WebSocket(wsServer); //创建WebSocket对象
         ws.onopen = function (evt) {  //打开时候进行额回掉函数
             layer.msg("已经建立连接", { offset: 0}); //提示已经建立
@@ -198,7 +199,8 @@
                            content:message,
                            from:'${userid}',
                            to:to,
-                           time:getDateFull()
+                           time:getDateFull(),
+                           roomid:roomid
                        },
                        type:"message"
                    }
@@ -263,9 +265,12 @@
    	    }
    	        // 生成在线列表
    		   function showOnline(list){
+   		         debugger;
+   		         // 遍历list来取出房间在线列表
+            var userIdlist = getOnlineUserId(list);
    	        $("#list").html("");    //清空在线列表
-   	        console.log(list.length);
-   	        $.each(list, function(index, item){     //添加私聊按钮
+   	        console.log(userIdlist.length);
+   	        $.each(userIdlist, function(index, item){     //添加私聊按钮
    	            var li = "<li>"+item+"[自己]</li>";
    	            if('${userid}' != item){    //排除自己
    	                li = "<li>"+item+
@@ -278,33 +283,43 @@
    	        });
    	        $("#onlinenum").text($("#list li").length);     //获取在线人数
    	    }
-   		     function addChat(user){
 
-   		    	 var sendto=$("#sendto");
-   		    	 debugger;
-   		    	 var receive=sendto.text()=="全体成员"?"":sendto.text()+",";
-   		    	 if(receive.indexOf(user)==-1){
-   		    		 sendto.text(receive+user);
-   		    	 }
-                 layer.closeAll();
-   		     }
-   		   function tuling(message){
-   	        var html;
-   	        $.getJSON("http://www.tuling123.com/openapi/api?key=6ad8b4d96861f17d68270216c880d5e3&info=" + message,function(data){
-   	            if(data.code == 100000){
-   	                html = "<li class=\"am-comment am-comment-primary\"><a href=\"#link-to-user-home\"><img width=\"48\" height=\"48\" class=\"am-comment-avatar\" alt=\"\" src=\"${ctx}/static/img/robot.jpg\"></a><div class=\"am-comment-main\">\n" +
-   	                        "<header class=\"am-comment-hd\"><div class=\"am-comment-meta\">   <a class=\"am-comment-author\" href=\"#link-to-user\">Robot</a> 发表于<time> "+getDateFull()+"</time> 发送给: ${userid}</div></header><div class=\"am-comment-bd\"> <p>"+data.text+"</p></div></div></li>";
-   	            }
-   	            if(data.code == 200000){
-   	                html = "<li class=\"am-comment am-comment-primary\"><a href=\"#link-to-user-home\"><img width=\"48\" height=\"48\" class=\"am-comment-avatar\" alt=\"\" src=\"${ctx}/static/img/robot.jpg\"></a><div class=\"am-comment-main\">\n" +
-   	                        "<header class=\"am-comment-hd\"><div class=\"am-comment-meta\">   <a class=\"am-comment-author\" href=\"#link-to-user\">Robot</a> 发表于<time> "+getDateFull()+"</time> 发送给: ${userid}</div></header><div class=\"am-comment-bd\"> <p>"+data.text+"</p><a href=\""+data.url+"\" target=\"_blank\">"+data.url+"</a></div></div></li>";
-   	            }
-   	            $("#chat").append(html);
-   	            var chat = $("#chat-view");
-   	            chat.scrollTop(chat[0].scrollHeight);
-   	            $("#message").val("");  //清空输入区
-   	        });
-   	    }
+   	    function getOnlineUserId(list){
+            var userIdList = [];
+            for(var i=0;i<list.length;i++){
+                if(list[i].roomId==roomid){
+                    userIdList.push(list[i].userId);
+                }
+            }
+            return userIdList;
+        }
+         function addChat(user){
+
+             var sendto=$("#sendto");
+             debugger;
+             var receive=sendto.text()=="全体成员"?"":sendto.text()+",";
+             if(receive.indexOf(user)==-1){
+                 sendto.text(receive+user);
+             }
+             layer.closeAll();
+         }
+        function tuling(message){
+            var html;
+            $.getJSON("http://www.tuling123.com/openapi/api?key=6ad8b4d96861f17d68270216c880d5e3&info=" + message,function(data){
+                if(data.code == 100000){
+                    html = "<li class=\"am-comment am-comment-primary\"><a href=\"#link-to-user-home\"><img width=\"48\" height=\"48\" class=\"am-comment-avatar\" alt=\"\" src=\"${ctx}/static/img/robot.jpg\"></a><div class=\"am-comment-main\">\n" +
+                            "<header class=\"am-comment-hd\"><div class=\"am-comment-meta\">   <a class=\"am-comment-author\" href=\"#link-to-user\">Robot</a> 发表于<time> "+getDateFull()+"</time> 发送给: ${userid}</div></header><div class=\"am-comment-bd\"> <p>"+data.text+"</p></div></div></li>";
+                }
+                if(data.code == 200000){
+                    html = "<li class=\"am-comment am-comment-primary\"><a href=\"#link-to-user-home\"><img width=\"48\" height=\"48\" class=\"am-comment-avatar\" alt=\"\" src=\"${ctx}/static/img/robot.jpg\"></a><div class=\"am-comment-main\">\n" +
+                            "<header class=\"am-comment-hd\"><div class=\"am-comment-meta\">   <a class=\"am-comment-author\" href=\"#link-to-user\">Robot</a> 发表于<time> "+getDateFull()+"</time> 发送给: ${userid}</div></header><div class=\"am-comment-bd\"> <p>"+data.text+"</p><a href=\""+data.url+"\" target=\"_blank\">"+data.url+"</a></div></div></li>";
+                }
+                $("#chat").append(html);
+                var chat = $("#chat-view");
+                chat.scrollTop(chat[0].scrollHeight);
+                $("#message").val("");  //清空输入区
+            });
+        }
          function checkinfo(item)
          {
              window.location.href="${ctx}/otherinfo/"+item;

@@ -11,7 +11,7 @@
                 <a class="am-cf" data-am-collapse="{target: '#collapse-nav2'}"><span class="am-icon-users"></span> 聊天室 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                 <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav2">
                     <li><a href="${ctx}/createroom.jsp"><span class="am-icon-plus-square"></span> 创建聊天室</a></li>
-                    <li><a href="${ctx}/system-setting/${userid}"><span class="am-icon-group"></span> 加入聊天室</a></li>
+                    <li><a href="${ctx}/joinroom.jsp"><span class="am-icon-group"></span> 加入聊天室</a></li>
                 </ul>
             </li>
 
