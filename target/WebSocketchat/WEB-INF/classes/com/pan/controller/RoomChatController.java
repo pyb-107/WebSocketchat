@@ -81,6 +81,17 @@ public class RoomChatController {
 	}
 
 
+	//	跳转到最近加入房间内
+	@RequestMapping("/chatroom/jumprecentroom/{userid}")
+	public String jumprecentroom(@PathVariable("userid")String userid, HttpSession httpSession){
+//		根据用户id查询最近加入的房间
+		String roomid = roomServiceImpl.selectRoomIdByUserId(userid);
+		httpSession.setAttribute("roomid",roomid);
+
+		System.out.println("jumpsuccess");
+		return "redirect:/roomchat.jsp";
+	}
+
 
 
 }

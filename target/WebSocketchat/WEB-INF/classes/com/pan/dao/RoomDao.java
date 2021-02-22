@@ -15,4 +15,6 @@ public interface RoomDao {
     void joinRoom(UserRoomRelation roomRelation);
 
     ArrayList<UserRoomRelation> selectAllRoomRelation();
+
+    String selectRoomIdByUserId(String userid);
 }

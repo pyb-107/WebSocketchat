@@ -15,4 +15,6 @@ public interface RoomService {
     ArrayList<UserRoomRelation> selectAllRoomRelation();
 
     int enterRoom(Room room);
+
+    String selectRoomIdByUserId(String userid);
 }

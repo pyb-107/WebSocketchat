@@ -14,6 +14,7 @@ public class RoomServiceImpl implements RoomService {
     @Resource
     private RoomDao roomDao;
     @Override
+    //插入新的房间信息
     public boolean insertRoom(Room room) {
         ArrayList<Room> rooms = selectRoomById(room.getRoomid());
         if(rooms.size()>0){
@@ -23,17 +24,17 @@ public class RoomServiceImpl implements RoomService {
             return true;
         }
     }
-
+//    根据用户id退出房间
     @Override
     public void exitRoom(String userid) {
         roomDao.exitRoom(userid);
     }
-
+//   用户加入房间
     @Override
     public void joinRoom(UserRoomRelation roomRelation) {
         roomDao.joinRoom(roomRelation);
     }
-
+//  查询所有用户加入房间的记录
     @Override
     public ArrayList<UserRoomRelation> selectAllRoomRelation() {
         ArrayList<UserRoomRelation> userRoomRelations = roomDao.selectAllRoomRelation();
@@ -41,7 +42,7 @@ public class RoomServiceImpl implements RoomService {
         return userRoomRelations;
 
     }
-
+//  加入房间
     @Override
     public int enterRoom(Room room) {
 //        根据roomid查询房间信息
@@ -62,6 +63,13 @@ public class RoomServiceImpl implements RoomService {
         }
     }
 
+    @Override
+    public String selectRoomIdByUserId(String userid) {
+
+        return roomDao.selectRoomIdByUserId(userid);
+    }
+
+    //    根据房间id查询房间信息
     public ArrayList<Room> selectRoomById(String id){
         return roomDao.selectRoomById(id);
     }

@@ -12,6 +12,8 @@
                 <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav2">
                     <li><a href="${ctx}/createroom.jsp"><span class="am-icon-plus-square"></span> 创建聊天室</a></li>
                     <li><a href="${ctx}/joinroom.jsp"><span class="am-icon-group"></span> 加入聊天室</a></li>
+                    <li><a href="${ctx}/chatroom/jumprecentroom/${userid}"><span class="am-icon-group"></span> 最近加入聊天室</a></li>
+
                 </ul>
             </li>
 

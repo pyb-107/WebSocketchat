@@ -265,7 +265,6 @@
    	    }
    	        // 生成在线列表
    		   function showOnline(list){
-   		         debugger;
    		         // 遍历list来取出房间在线列表
             var userIdlist = getOnlineUserId(list);
    	        $("#list").html("");    //清空在线列表
@@ -296,7 +295,6 @@
          function addChat(user){
 
              var sendto=$("#sendto");
-             debugger;
              var receive=sendto.text()=="全体成员"?"":sendto.text()+",";
              if(receive.indexOf(user)==-1){
                  sendto.text(receive+user);

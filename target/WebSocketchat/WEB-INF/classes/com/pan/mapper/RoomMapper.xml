@@ -32,6 +32,10 @@
     <select id="selectAllRoomRelation" resultMap="RoomIdRelationMap">
         select * from user_room_log
     </select>
+    <select id="selectRoomIdByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        select roomid from user_room_log
+        where USERID = #{userid, jdbcType=VARCHAR}
+    </select>
 
 
 </mapper>
